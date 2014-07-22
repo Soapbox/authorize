@@ -1,7 +1,5 @@
 <?php namespace SoapBox\Authorize\Test;
 
-use \Mockery;
-
 abstract class TestCase extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -14,7 +12,6 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase {
 	 * Runs after every test in the suite.
 	 */
 	protected function tearDown() {
-		Mockery::close();
 	}
 
 }
