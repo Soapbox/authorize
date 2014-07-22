@@ -1,4 +1,4 @@
-<?php namespace SoapBox;
+<?php namespace SoapBox\Authorize;
 
 class Authenticator {
 
@@ -7,16 +7,14 @@ class Authenticator {
 	 *
 	 * @var Strategy
 	 */
-	private $strategy;
+	public $strategy;
 
 	/**
 	 * Initializes internal varaibles to prepare the class to preform our
 	 * authentication against the provided strategy.
 	 *
-	 * @param string $strategy The name of the strategy we are using to
-	 *	authenticate
-	 * @param array $settings The configurations required for the provided
-	 *	strategy
+	 * @param string $strategy The name of the strategy. (i.e. facebook)
+	 * @param array $settings The settings the strategy requires to initialize.
 	 *
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.

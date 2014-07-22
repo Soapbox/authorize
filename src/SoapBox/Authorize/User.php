@@ -1,4 +1,4 @@
-<?php namespace SoapBox;
+<?php namespace SoapBox\Authorize;
 
 class User {
 

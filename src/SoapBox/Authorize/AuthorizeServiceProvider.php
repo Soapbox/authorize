@@ -17,7 +17,7 @@ class AuthorizeServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function boot() {
-		$this->package('soap-box/authorize');
+		$this->package('soapbox/authorize');
 	}
 
 	/**
