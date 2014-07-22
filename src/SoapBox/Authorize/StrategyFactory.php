@@ -1,5 +1,6 @@
 <?php namespace SoapBox\Authorize;
 
+use Illuminate\Support\Facades\Lang as Lang;
 use SoapBox\Authorize\Exceptions\DuplicateStrategyException;
 use SoapBox\Authorize\Exceptions\InvalidStrategyException;
 
@@ -26,10 +27,14 @@ class StrategyFactory {
 	 */
 	public static function register($name, $klass) {
 		if (array_key_exists($name, self::$strategies)) {
-			throw new DuplicateStrategyException();
+			throw new DuplicateStrategyException(
+				"The $name key has already been registered."
+			);
 		}
 		if (!in_array('SoapBox\Authorize\Strategy', class_implements($klass))) {
-			throw new InvalidStrategyException('Strategy interface missing.');
+			throw new InvalidStrategyException(
+				"The provided class does not implement the 'SoapBox\Authorize\Strategy' interface."
+			);
 		}
 		self::$strategies[$name] = $klass;
 	}
@@ -44,7 +49,9 @@ class StrategyFactory {
 	 */
 	public static function get($strategy, $settings = array()) {
 		if (!array_key_exists($strategy, self::$strategies)) {
-			throw new InvalidStrategyException('Requested Strategy does not exist.');
+			throw new InvalidStrategyException(
+				"$strategy strategy has not been registered."
+			);
 		}
 		return new self::$strategies[$strategy]($settings);
 	}
