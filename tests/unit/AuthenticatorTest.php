@@ -1,6 +1,5 @@
 <?php namespace SoapBox\Authorize\Test;
 
-use \Mockery;
 use SoapBox\Authorize\Authenticator;
 
 class AuthenticatorMock extends Authenticator {

@@ -1,5 +1,6 @@
 <?php namespace SoapBox\Authorize;
 
+use SoapBox\Authorize\Exceptions\DuplicateStrategyException;
 use SoapBox\Authorize\Exceptions\InvalidStrategyException;
 
 class StrategyFactory {
@@ -14,8 +15,10 @@ class StrategyFactory {
 	/**
 	 * Used to register a new strategy with Authorize
 	 *
-	 * @throws InvalidStrategyException If the provided strategy is not valid
-	 *	or is a duplicate.
+	 * @throws DuplicateStrategyException If the provided strategy has been
+	 *	previously registered.
+	 * @throws InvalidStrategyException If the provided strategy is not valid,
+	 *	it is not implementing the Strategy interface.
 	 *
 	 * @param string $name The friendly name of the class that is being
 	 *	registered
@@ -23,9 +26,9 @@ class StrategyFactory {
 	 */
 	public static function register($name, $klass) {
 		if (array_key_exists($name, self::$strategies)) {
-			throw new InvalidStrategyException('Duplicate strategy provided.');
+			throw new DuplicateStrategyException();
 		}
-		if (!in_array('SoapBox\Authorize\Strategy', $strategy)) {
+		if (!in_array('SoapBox\Authorize\Strategy', class_implements($klass))) {
 			throw new InvalidStrategyException('Strategy interface missing.');
 		}
 		self::$strategies[$name] = $klass;
