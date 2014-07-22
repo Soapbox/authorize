@@ -1,10 +1,14 @@
 {
     "name": "soapbox/authorize",
     "description": "A simple authorization wrapper.",
+    "keywords": ["authentication"],
+    "license": "proprietary",
     "authors": [
         {
             "name": "Jaspaul Bola",
-            "email": "jaspaul.b@gmail.com"
+            "email": "jaspaul.b@gmail.com",
+            "homepage": "http://jaspaulbola.com",
+            "role": "Developer"
         }
     ],
     "require": {
