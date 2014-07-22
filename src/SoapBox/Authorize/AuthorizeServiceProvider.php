@@ -16,8 +16,7 @@ class AuthorizeServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function boot()
-	{
+	public function boot() {
 		$this->package('soap-box/authorize');
 	}
 
@@ -26,9 +25,7 @@ class AuthorizeServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function register()
-	{
-		//
+	public function register() {
 	}
 
 	/**
@@ -36,8 +33,7 @@ class AuthorizeServiceProvider extends ServiceProvider {
 	 *
 	 * @return array
 	 */
-	public function provides()
-	{
+	public function provides() {
 		return array();
 	}
 
