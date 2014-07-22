@@ -39,4 +39,5 @@ class Authenticator {
 	public function authenticate($parameters = array()) {
 		return $this->strategy->login($parameters);
 	}
+
 }

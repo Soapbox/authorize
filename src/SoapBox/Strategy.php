@@ -1,6 +1,15 @@
 <?php namespace SoapBox;
 
 interface Strategy {
+
+	/**
+	 * Used to construct the strategy and initialize any internal settings.
+	 *
+	 * @param array $settings The settings that will be required to setup this
+	 *	strategy. (i.e. OpenId settings)
+	 */
+	public function __construct($settings = array());
+
 	/**
 	 * Used to attempt an authentication against the strategy.
 	 *
@@ -13,4 +22,5 @@ interface Strategy {
 	 * @return User A mixed array representing the authenticated user.
 	 */
 	public function login($parameters = array());
+
 }
