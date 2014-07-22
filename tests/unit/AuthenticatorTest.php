@@ -3,6 +3,11 @@
 use \Mockery;
 use SoapBox\Authorize\Authenticator;
 
+class AuthenticatorMock extends Authenticator {
+	public function __construct() {
+	}
+}
+
 class AuthenticatorTest extends TestCase {
 
 	public function testAuthenticateDelegatesToStrategyLoginMethod() {
@@ -15,7 +20,9 @@ class AuthenticatorTest extends TestCase {
 			->with($this->equalTo($parameters))
 			->willReturn($expected);
 
-		$authenticator = new Authenticator($strategy);
+		$authenticator = new AuthenticatorMock();
+
+		$authenticator->strategy = $strategy;
 
 		$actual = $authenticator->authenticate($parameters);
 

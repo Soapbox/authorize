@@ -5,21 +5,45 @@ use SoapBox\Authorize\Exceptions\InvalidStrategyException;
 class StrategyFactory {
 
 	/**
+	 * The strategies that have been registered with the factory.
+	 *
+	 * @var array $strategies Named array of strategies
+	 */
+	private static $strategies = array();
+
+	/**
+	 * Used to register a new strategy with Authorize
+	 *
+	 * @throws InvalidStrategyException If the provided strategy is not valid
+	 *	or is a duplicate.
+	 *
+	 * @param string $name The friendly name of the class that is being
+	 *	registered
+	 * @param string $klass The class with namespace that is being registered
+	 */
+	public static function register($name, $klass) {
+		if (array_key_exists($name, self::$strategies)) {
+			throw new InvalidStrategyException('Duplicate strategy provided.');
+		}
+		if (!in_array('SoapBox\Authorize\Strategy', $strategy)) {
+			throw new InvalidStrategyException('Strategy interface missing.');
+		}
+		self::$strategies[$name] = $klass;
+	}
+
+	/**
 	 * Used to retrieve the specified strategy for authenticating.
 	 *
 	 * @param string $strategy The name of the strategy. (i.e. facebook)
 	 * @param array $settings The settings the strategy requires to initialize.
 	 *
-	 * @throws InvalidStrategyException If the provided strategy is not valid
-	 *	or supported.
-	 *
 	 * @return Strategy An instance of the strategy requested.
 	 */
 	public static function get($strategy, $settings = array()) {
-		if (!in_array('SoapBox\Authorize\Strategy', class_implements($strategy))) {
-			throw new InvalidStrategyException();
+		if (!array_key_exists($strategy, self::$strategies)) {
+			throw new InvalidStrategyException('Requested Strategy does not exist.');
 		}
-		return new $strategy[$strategy]($settings);
+		return new self::$strategies[$strategy]($settings);
 	}
 
 }
