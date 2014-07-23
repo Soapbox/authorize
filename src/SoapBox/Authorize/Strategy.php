@@ -36,4 +36,18 @@ interface Strategy {
 	 */
 	public function getUser($parameters = array());
 
+	/**
+	 * Used to handle tasks prior to login. In the case of OAuth this would be
+	 * to generate our token before redirecting to the strategy site.
+	 */
+	public function beforeLogin();
+
+	/**
+	 * Used to handle tasks after login. This could include retrieving our users
+	 * token after a successful authentication.
+	 *
+	 * @return array Mixed array of the tokens and other components that
+	 *	validate our user.
+	 */
+	public function afterLogin();
 }
