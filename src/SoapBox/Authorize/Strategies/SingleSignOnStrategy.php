@@ -1,6 +1,6 @@
 <?php namespace SoapBox\Authorize\Strategies;
 
-abstract class OAuth2Strategy implements Strategy {
+abstract class SingleSignOnStrategy implements Strategy {
 
 	/**
 	 * Used to construct the strategy and initialize any internal settings.
