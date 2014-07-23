@@ -1,6 +1,6 @@
-<?php namespace SoapBox\Authorize;
+<?php namespace SoapBox\Authorize\Strategies;
 
-interface Strategy {
+abstract class OAuth2Strategy implements Strategy {
 
 	/**
 	 * Used to construct the strategy and initialize any internal settings.
@@ -8,7 +8,7 @@ interface Strategy {
 	 * @param array $settings The settings that will be required to setup this
 	 *	strategy. (i.e. OpenId settings)
 	 */
-	public function __construct($settings = array());
+	public abstract function __construct($settings = array());
 
 	/**
 	 * Used to attempt an authentication against the strategy.
@@ -21,7 +21,7 @@ interface Strategy {
 	 *
 	 * @return bool Indicates if login was successful
 	 */
-	public function login($parameters = array());
+	public abstract function login($parameters = array());
 
 	/**
 	 * Used to retrieve a user using this Strategy.
@@ -34,6 +34,15 @@ interface Strategy {
 	 *
 	 * @return User A mixed array repreesnting the authenticated user.
 	 */
-	public function getUser($parameters = array());
+	public abstract function getUser($parameters = array());
+
+	/**
+	 * Used to handle tasks after login. This could include retrieving our users
+	 * token after a successful authentication.
+	 *
+	 * @return array Mixed array of the tokens and other components that
+	 *	validate our user.
+	 */
+	public abstract function endpoint();
 
 }
