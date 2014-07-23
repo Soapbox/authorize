@@ -1,6 +1,7 @@
 <?php namespace SoapBox\Authorize\Strategies;
 
 use SoapBox\Authorize\Strategy;
+use SoapBox\Authorize\Exceptions\NotSupportedException;
 
 abstract class SingleSignOnStrategy implements Strategy {
 
@@ -24,6 +25,36 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 * @return User A mixed array repreesnting the authenticated user.
 	 */
 	public abstract function login($parameters = array());
+
+	/**
+	 * Used to retrieve the user from the strategy.
+	 *
+	 * @param array parameters The parameters required to authenticate against
+	 *	this strategy. (i.e. accessToken)
+	 *
+	 * @throws AuthenticationException If the provided parameters do not
+	 *	successfully authenticate.
+	 *
+	 * @return User A mixed array representing the authenticated user.
+	 */
+	public function getUser($parameters = array()) {
+		throw new NotSupportedException();
+	}
+
+	/**
+	 * Used to retrieve the social network from the strategy.
+	 *
+	 * @param array parameters The parameters required to authenticate against
+	 *	this strategy. (i.e. accessToken)
+	 *
+	 * @throws AuthenticationException If the provided parameters do not
+	 *	successfully authenticate.
+	 *
+	 * @return array A list of userId's that are friends of this user.
+	 */
+	public function getFriends($parameters = array()) {
+		throw new NotSupportedException();
+	}
 
 	/**
 	 * Used to handle tasks after login. This could include retrieving our users
