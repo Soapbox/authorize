@@ -23,4 +23,25 @@ class User {
 	 */
 	public $email;
 
+	/**
+	 * The access token for this user as provided by the strategy.
+	 *
+	 * @var string
+	 */
+	public $accessToken;
+
+	/**
+	 * The users firstname
+	 *
+	 * @var string
+	 */
+	public $firstname;
+
+	/**
+	 * The users lastname
+	 *
+	 * @var string
+	 */
+	public $lastname;
+
 }
