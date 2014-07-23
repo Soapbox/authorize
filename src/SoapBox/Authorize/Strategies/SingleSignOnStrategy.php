@@ -1,5 +1,7 @@
 <?php namespace SoapBox\Authorize\Strategies;
 
+use SoapBox\Authorize\Strategy;
+
 abstract class SingleSignOnStrategy implements Strategy {
 
 	/**
