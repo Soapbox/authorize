@@ -27,7 +27,7 @@ authorization libraries. Please check their documentation for the specifics of
 what they require.
 
 ### Authorizing with the Strategy (Laravel Example ... )
-```
+```php
 use SoapBox\Authroize\Authenticator;
 use SoapBox\Authorize\Exceptions\InvalidStrategyException;
 ...
@@ -65,7 +65,7 @@ Add the following to your `composer.json`
 ```
 "require": {
 	...
-	"soapbox/authorize": "1.0.*",
+	"soapbox/authorize": "dev-master",
 	...
 }
 ```
