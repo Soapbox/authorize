@@ -50,7 +50,7 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
 	 *
-	 * @return array A list of userId's that are friends of this user.
+	 * @return array Contact A list of contacts that are friends of this user.
 	 */
 	public function getFriends($parameters = array()) {
 		throw new NotSupportedException();
