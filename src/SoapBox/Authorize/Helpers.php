@@ -26,13 +26,13 @@ class Helpers {
 	 * @return mixed
 	 */
 	public static function getValueOrDefault($value, $default, $index = null) {
-		if ($index == null) {
-			if (isset($value)) {
-				return $value;
+		if ($index !== null) {
+			if (isset($value) && isset($value[$index])) {
+				return $value[$index];
 			}
 		}
-		if (isset($value) && isset($value[$index])) {
-			return $value[$index];
+		if (isset($value)) {
+			return $value;
 		}
 		return $default;
 	}
