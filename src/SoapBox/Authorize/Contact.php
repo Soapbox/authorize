@@ -47,11 +47,4 @@ class Contact {
 	 */
 	public $website;
 
-	/**
-	 * A collection of custom parameters to retrieve from the Strategy
-	 *
-	 * @var array
-	 */
-	public $custom = [];
-
 }

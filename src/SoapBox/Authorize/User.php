@@ -54,4 +54,12 @@ class User {
 	 */
 	public $lastname;
 
+	/**
+	 * A collection of custom properties for the user, that can be populated by
+	 * the strategy
+	 *
+	 * @var mixed[]
+	 */
+	public $custom = [];
+
 }
