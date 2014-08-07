@@ -21,12 +21,18 @@ class Helpers {
 	 *
 	 * @param mixed $value The value you wish to validate.
 	 * @param mixed $default The value you wish to get if value is not set
+	 * @param integer $index The index to search for the value.
 	 *
 	 * @return mixed
 	 */
-	public static function getValueOrDefault($value, $default) {
-		if (isset($value)) {
-			return $value;
+	public static function getValueOrDefault($value, $default, $index = null) {
+		if ($index == null) {
+			if (isset($value)) {
+				return $value;
+			}
+		}
+		if (isset($value) && isset($value[$index])) {
+			return $value[$index];
 		}
 		return $default;
 	}
