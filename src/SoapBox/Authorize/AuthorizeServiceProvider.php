@@ -2,6 +2,9 @@
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Used to register Authroize with service providers, mainly for Laravel.
+ */
 class AuthorizeServiceProvider extends ServiceProvider {
 
 	/**

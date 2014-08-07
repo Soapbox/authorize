@@ -1,5 +1,9 @@
 <?php namespace SoapBox\Authorize;
 
+/**
+ * The entry point into the Authroize library that enables the validation of a
+ * user against a strategy.
+ */
 class Authenticator {
 
 	/**
@@ -14,7 +18,7 @@ class Authenticator {
 	 * authentication against the provided strategy.
 	 *
 	 * @param string $strategy The name of the strategy. (i.e. facebook)
-	 * @param array $settings The settings the strategy requires to initialize.
+	 * @param mixed[] $settings The settings the strategy requires to initialize.
 	 *
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.
@@ -26,8 +30,8 @@ class Authenticator {
 	/**
 	 * Used to attempt an authentication against the provided strategy.
 	 *
-	 * @param array parameters The parameters requried to authenticate against
-	 *	this strategy. (i.e. username, password, etc)
+	 * @param mixed[] $parameters The parameters requried to authenticate
+	 *	against this strategy. (i.e. username, password, etc)
 	 *
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.

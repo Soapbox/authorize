@@ -1,5 +1,8 @@
 <?php namespace SoapBox\Authorize;
 
+/**
+ * Used as a unified definition of a user across multiple Strategies.
+ */
 class User {
 
 	/**
@@ -8,6 +11,13 @@ class User {
 	 * @var mixed
 	 */
 	public $id;
+
+	/**
+	 * The name that the user displays on the Strategy
+	 *
+	 * @var string
+	 */
+	public $displayName;
 
 	/**
 	 * The username representing the user on the system

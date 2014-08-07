@@ -1,5 +1,9 @@
 <?php namespace SoapBox\Authorize;
 
+/**
+ * An interface describing the minimum requirements to authorize against a
+ * Strategy.
+ */
 interface Strategy {
 
 	/**
@@ -13,13 +17,13 @@ interface Strategy {
 	/**
 	 * Used to attempt an authentication against the strategy.
 	 *
-	 * @param array parameters The parameters requried to authenticate against
-	 *	this strategy. (i.e. username, password, etc)
+	 * @param mixed[] $parameters The parameters requried to authenticate
+	 *	against this strategy. (i.e. username, password, etc)
 	 *
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
 	 *
-	 * @return User A mixed array repreesnting the authenticated user.
+	 * @return User The user retrieved from the Strategy
 	 */
 	public function login($parameters = array());
 

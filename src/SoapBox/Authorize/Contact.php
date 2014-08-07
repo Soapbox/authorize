@@ -1,6 +1,10 @@
 <?php namespace SoapBox\Authorize;
 
+/**
+ * Used to define a user that has a relationship with the authenticated user.
+ */
 class Contact {
+
 	/**
 	 * A unique identifier for the Contact
 	 *
@@ -42,4 +46,12 @@ class Contact {
 	 * @var string
 	 */
 	public $website;
+
+	/**
+	 * A collection of custom parameters to retrieve from the Strategy
+	 *
+	 * @var array
+	 */
+	public $custom = [];
+
 }

@@ -4,12 +4,16 @@ use Illuminate\Support\Facades\Lang as Lang;
 use SoapBox\Authorize\Exceptions\DuplicateStrategyException;
 use SoapBox\Authorize\Exceptions\InvalidStrategyException;
 
+/**
+ * Used to handle the registration and retrieval of various strategies from
+ * Authorize.
+ */
 class StrategyFactory {
 
 	/**
 	 * The strategies that have been registered with the factory.
 	 *
-	 * @var array $strategies Named array of strategies
+	 * @var Strategy[] $strategies Named array of strategies
 	 */
 	private static $strategies = array();
 
@@ -43,7 +47,7 @@ class StrategyFactory {
 	 * Used to retrieve the specified strategy for authenticating.
 	 *
 	 * @param string $strategy The name of the strategy. (i.e. facebook)
-	 * @param array $settings The settings the strategy requires to initialize.
+	 * @param mixed[] $settings The settings the strategy requires to initialize
 	 *
 	 * @return Strategy An instance of the strategy requested.
 	 */
