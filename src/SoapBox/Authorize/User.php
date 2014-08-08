@@ -62,4 +62,23 @@ class User {
 	 */
 	public $custom = [];
 
+	/**
+	 * Used to return an array representation of the user object. Good for
+	 * validators.
+	 *
+	 * @return mixed[] The properties of the user as an array
+	 */
+	public function toArray() {
+		return [
+			'id' => $this->id,
+			'displayName' => $this->displayName,
+			'username' => $this->username,
+			'email' => $this->email,
+			'accessToken' => $this->accessToken,
+			'firstname' => $this->firstname,
+			'lastname' => $this->lastname,
+			'custom' => $this->custom
+		];
+	}
+
 }
