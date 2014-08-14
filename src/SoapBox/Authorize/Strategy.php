@@ -11,8 +11,11 @@ interface Strategy {
 	 *
 	 * @param array $settings The settings that will be required to setup this
 	 *	strategy. (i.e. OpenId settings)
+	 * @param callable $store A callback that will store a KVP (Key Value Pair).
+	 * @param callable $load A callback that will return a value stored with the
+	 *	provided key.
 	 */
-	public function __construct($settings = array());
+	public function __construct($settings = array(), $store = null, $load = null);
 
 	/**
 	 * Used to attempt an authentication against the strategy.

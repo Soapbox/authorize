@@ -48,16 +48,19 @@ class StrategyFactory {
 	 *
 	 * @param string $strategy The name of the strategy. (i.e. facebook)
 	 * @param mixed[] $settings The settings the strategy requires to initialize
+	 * @param callable $store A callback that will store a KVP (Key Value Pair).
+	 * @param callable $load A callback that will return a value stored with the
+	 *	provided key.
 	 *
 	 * @return Strategy An instance of the strategy requested.
 	 */
-	public static function get($strategy, $settings = array()) {
+	public static function get($strategy, $settings = array(), $store = null, $load = null) {
 		if (!array_key_exists($strategy, self::$strategies)) {
 			throw new InvalidStrategyException(
 				"$strategy strategy has not been registered."
 			);
 		}
-		return new self::$strategies[$strategy]($settings);
+		return new self::$strategies[$strategy]($settings, $store, $load);
 	}
 
 }

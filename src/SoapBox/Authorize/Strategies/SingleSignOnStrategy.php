@@ -12,10 +12,13 @@ abstract class SingleSignOnStrategy implements Strategy {
 	/**
 	 * Used to construct the strategy and initialize any internal settings.
 	 *
-	 * @param mixed[] $settings Array of settings that will be required to setup
-	 *	this strategy. (i.e. OpenId settings)
+	 * @param array $settings The settings that will be required to setup this
+	 *	strategy. (i.e. OpenId settings)
+	 * @param callable $store A callback that will store a KVP (Key Value Pair).
+	 * @param callable $load A callback that will return a value stored with the
+	 *	provided key.
 	 */
-	public abstract function __construct($settings = array());
+	public abstract function __construct($settings = array(), $store = null, $load = null);
 
 	/**
 	 * Used to attempt an authentication against the strategy.
