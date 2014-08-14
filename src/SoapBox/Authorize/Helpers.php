@@ -13,7 +13,7 @@ class Helpers {
 	 */
 	public static function redirect($url) {
 		header("Location: $url");
-		die();
+		exit();
 	}
 
 	/**
