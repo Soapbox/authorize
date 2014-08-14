@@ -19,12 +19,15 @@ class Authenticator {
 	 *
 	 * @param string $strategy The name of the strategy. (i.e. facebook)
 	 * @param mixed[] $settings The settings the strategy requires to initialize.
+	 * @param callable $store A callback that will store a KVP (Key Value Pair).
+	 * @param callable $load A callback that will return a value stored with the
+	 *	provided key.
 	 *
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.
 	 */
-	public function __construct($strategy, $settings = array()) {
-		$this->strategy = StrategyFactory::get($strategy, $settings);
+	public function __construct($strategy, $settings = array(), $store = null, $load = null) {
+		$this->strategy = StrategyFactory::get($strategy, $settings, $store, $load);
 	}
 
 	/**
