@@ -26,7 +26,16 @@ class Authenticator {
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.
 	 */
-	public function __construct($strategy, $settings = array(), $store = null, $load = null) {
+	public function __construct($strategy, $settings = array(), $store = null, $load = null, $redirect = null) {
+		if ($redirect == null) {
+			Helpers::$redirect = function ($url) {
+				header("Location: $url");
+				die();
+			};
+		} else {
+			Helpers::$redirect = $redirect;
+		}
+
 		$this->strategy = StrategyFactory::get($strategy, $settings, $store, $load);
 	}
 
