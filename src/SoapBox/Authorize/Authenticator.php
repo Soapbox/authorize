@@ -63,7 +63,7 @@ class Authenticator {
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.
 	 */
-	public function __construct($strategy, $settings = array()) {
+	public function __construct($strategy, $settings = []) {
 		$this->strategy = StrategyFactory::get($strategy, $settings);
 	}
 
@@ -85,9 +85,9 @@ class Authenticator {
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
 	 *
-	 * @return mixed[] A mixed array representing the authenticated user.
+	 * @return bool True if the user is logged in, redirect otherwise.
 	 */
-	public function authenticate($parameters = array()) {
+	public function authenticate($parameters = []) {
 		return $this->strategy->login($parameters, $this->store, $this->redirect);
 	}
 
@@ -102,7 +102,7 @@ class Authenticator {
 	 *
 	 * @return User The user retieved from the Strategy
 	 */
-	public function getUser($parameters = array()) {
+	public function getUser($parameters = []) {
 		return $this->strategy->getUser($parameters, $this->load);
 	}
 
