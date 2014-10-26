@@ -15,7 +15,7 @@ class StrategyFactory {
 	 *
 	 * @var Strategy[] $strategies Named array of strategies
 	 */
-	private static $strategies = array();
+	private static $strategies = [];
 
 	/**
 	 * Used to register a new strategy with Authorize
@@ -54,13 +54,13 @@ class StrategyFactory {
 	 *
 	 * @return Strategy An instance of the strategy requested.
 	 */
-	public static function get($strategy, $settings = array(), $store = null, $load = null) {
+	public static function get($strategy, $settings = []) {
 		if (!array_key_exists($strategy, self::$strategies)) {
 			throw new InvalidStrategyException(
 				"$strategy strategy has not been registered."
 			);
 		}
-		return new self::$strategies[$strategy]($settings, $store, $load);
+		return new self::$strategies[$strategy]($settings);
 	}
 
 }
