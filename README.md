@@ -67,7 +67,7 @@ Add the following to your `composer.json`
 ```
 "require": {
 	...
-	"soapbox/authorize": "0.2.*",
+	"soapbox/authorize": "1.0.*",
 	...
 }
 ```
