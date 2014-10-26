@@ -16,6 +16,10 @@ class FakeStrategy implements Strategy {
 	public function getUser($parameters = array()) {
 		return new User;
 	}
+
+	public function expects() {
+		return [];
+	}
 }
 
 class StrategyFactoryTest extends TestCase {
