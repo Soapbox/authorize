@@ -34,6 +34,13 @@ abstract class SingleSignOnStrategy implements Strategy {
 	public abstract function login($parameters = array());
 
 	/**
+	 * Returns a list of items that the strategy expects from the input.
+	 *
+	 * @return string[] A list of parameters that the strategy is expecting.
+	 */
+	public abstract function expects();
+
+	/**
 	 * Used to retrieve the user from the strategy.
 	 *
 	 * @param mixed[] $parameters The parameters required to authenticate

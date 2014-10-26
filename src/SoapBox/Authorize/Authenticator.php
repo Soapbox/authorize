@@ -1,5 +1,7 @@
 <?php namespace SoapBox\Authorize;
 
+use SoapBox\Authorize\Strategies\SingleSignOnStrategy;
+
 /**
  * The entry point into the Authroize library that enables the validation of a
  * user against a strategy.
@@ -18,25 +20,23 @@ class Authenticator {
 	 * authentication against the provided strategy.
 	 *
 	 * @param string $strategy The name of the strategy. (i.e. facebook)
-	 * @param mixed[] $settings The settings the strategy requires to initialize.
-	 * @param callable $store A callback that will store a KVP (Key Value Pair).
-	 * @param callable $load A callback that will return a value stored with the
-	 *	provided key.
+	 * @param mixed[] $settings A collection of settings required to initialize the
+	 *	provided strategy.
 	 *
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.
 	 */
-	public function __construct($strategy, $settings = array(), $store = null, $load = null, $redirect = null) {
-		if ($redirect == null) {
-			Helpers::$redirect = function ($url) {
-				header("Location: $url");
-				die();
-			};
-		} else {
-			Helpers::$redirect = $redirect;
-		}
+	public function __construct($strategy, $settings) {
+		$this->strategy = StrategyFactory::get($strategy, $settings);
+	}
 
-		$this->strategy = StrategyFactory::get($strategy, $settings, $store, $load);
+	/**
+	 * Returns a list of items that the strategy expects from the input.
+	 *
+	 * @return string[] A list of parameters that the strategy is expecting.
+	 */
+	public function expects() {
+		return $this->strategy->expects();
 	}
 
 	/**
