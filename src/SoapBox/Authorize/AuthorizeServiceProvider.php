@@ -12,7 +12,7 @@ class AuthorizeServiceProvider extends ServiceProvider {
 	 *
 	 * @var bool
 	 */
-	protected $defer = false;
+	protected $defer = true;
 
 	/**
 	 * Bootstrap the application events.
@@ -29,6 +29,10 @@ class AuthorizeServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function register() {
+		$this->app->bind(
+			'soapbox.authorize',
+			'SoapBox\Authorize\Authorize'
+		);
 	}
 
 	/**
@@ -37,7 +41,7 @@ class AuthorizeServiceProvider extends ServiceProvider {
 	 * @return array
 	 */
 	public function provides() {
-		return array();
+		return ['soapbox.authorize'];
 	}
 
 }
