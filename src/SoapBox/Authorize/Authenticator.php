@@ -15,41 +15,41 @@ class Authenticator {
 	 */
 	public $strategy;
 
-	/**
-	 * Stores the provided value in our session
-	 *
-	 * @param string $key The dictionary location where we would like to store the value
-	 * @param mixed $value The value we wish to store
-	 */
-	protected function store($key, $value) {
-		if ((function_exists('session_status') && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
-			session_start();
+	private function setStore($store) {
+		if ($store === null) {
+			Helpers::$store = function($key, $value) {
+				if ((function_exists('session_status') && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
+					session_start();
+				}
+				$_SESSION[$key] = $value;
+			};
+		} else {
+			Helpers::$store = $store;
 		}
-		$_SESSION[$key] = $value;
 	}
 
-	/**
-	 * Retrieves the previously stored value from our session
-	 *
-	 * @param string $key The key with which we have binded the value we are retrieving
-	 *
-	 * @return mixed The stored value
-	 */
-	protected function load($key) {
-		if ((function_exists('session_status') && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
-			session_start();
+	private function setLoad($load) {
+		if ($load === null) {
+			Helpers::$load = function($key) {
+				if ((function_exists('session_status') && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
+					session_start();
+				}
+				return $_SESSION[$key];
+			};
+		} else {
+			Helpers::$load = $load;
 		}
-		return $_SESSION[$key];
 	}
 
-	/**
-	 * Redirect the application to the provided url
-	 *
-	 * @param string $url The url you wish to redirect a browser to
-	 */
-	protected function redirect($url) {
-		header("Location: $url");
-		die();
+	private function setRedirect($redirect) {
+		if ($redirect === null) {
+			Helpers::$redirect = function ($url) {
+				header("Location: $url");
+				die();
+			};
+		} else {
+			Helpers::$redirect = $redirect;
+		}
 	}
 
 	/**
@@ -63,7 +63,10 @@ class Authenticator {
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.
 	 */
-	public function __construct($strategy, $settings = []) {
+	public function __construct($strategy, $settings = [], $store = null, $load = null, $redirect = null) {
+		$this->setStore($store);
+		$this->setLoad($load);
+		$this->setRedirect($redirect);
 		$this->strategy = StrategyFactory::get($strategy, $settings);
 	}
 
