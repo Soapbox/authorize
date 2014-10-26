@@ -18,7 +18,14 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 * @param callable $load A callback that will return a value stored with the
 	 *	provided key.
 	 */
-	public abstract function __construct($settings = array(), $store = null, $load = null);
+	public abstract function __construct($settings = array());
+
+	/**
+	 * Returns a list of items that the strategy expects from the input.
+	 *
+	 * @return string[] A list of parameters that the strategy is expecting.
+	 */
+	public abstract function expects();
 
 	/**
 	 * Used to attempt an authentication against the strategy.
@@ -34,13 +41,6 @@ abstract class SingleSignOnStrategy implements Strategy {
 	public abstract function login($parameters = array());
 
 	/**
-	 * Returns a list of items that the strategy expects from the input.
-	 *
-	 * @return string[] A list of parameters that the strategy is expecting.
-	 */
-	public abstract function expects();
-
-	/**
 	 * Used to retrieve the user from the strategy.
 	 *
 	 * @param mixed[] $parameters The parameters required to authenticate
@@ -51,9 +51,7 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 *
 	 * @return User The user retieved from the Strategy
 	 */
-	public function getUser($parameters = array()) {
-		throw new NotSupportedException();
-	}
+	public abstract function getUser($parameters = array());
 
 	/**
 	 * Used to retrieve the social network from the strategy.
@@ -69,14 +67,5 @@ abstract class SingleSignOnStrategy implements Strategy {
 	public function getFriends($parameters = array()) {
 		throw new NotSupportedException();
 	}
-
-	/**
-	 * Used to handle tasks after login. This could include retrieving our users
-	 * token after a successful authentication.
-	 *
-	 * @return mixed[] Array of the tokens and other components that validate
-	 *	our user.
-	 */
-	public abstract function endpoint();
 
 }
