@@ -20,6 +20,8 @@ ability to Authorize against 3rd parties.
 
 ## Some providers to get you started
 [Facebook](https://github.com/SoapBox/authorize-facebook)
+[Google](https://github.com/SoapBox/authorize-google)
+[League - Eventbrite, Github, LinkedIn, Microsoft](https://github.com/Soapbox/authorize-league)
 
 ## Usage
 The goal of using Authorize is to leave all the heavy lifting to the various
@@ -47,7 +49,7 @@ Route::get('social/{provider}/{action?}', function($provider, $action = null) {
 	try {
 		$strategy = new Authenticator($provider, $settings);
 		if ($action == 'callback') {
-			$user = $strategy->endpoint();
+			$user = $strategy->getUser([]);
 		} else {
 			$user = $strategy->authenticate($parameters);
 		}
@@ -65,7 +67,7 @@ Add the following to your `composer.json`
 ```
 "require": {
 	...
-	"soapbox/authorize": "dev-master",
+	"soapbox/authorize": "0.2.*",
 	...
 }
 ```
