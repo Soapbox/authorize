@@ -1,20 +1,27 @@
 <?php namespace SoapBox\Authorize\Sessions;
 
 use SoapBox\Authorize\Session;
+use SoapBox\Authorize\Exceptions\MissingArgumentsException;
 use SoapBox\Authorize\Exceptions\KeyNotFoundException;
 
 /**
- * Utilizes native php sessions to provide a session implementation
+ * An adapter for the Laravel Session
  */
-class DefaultSession implements Session {
+class LaravelSession implements Session {
+
+	/**
+	 * The session that will be doing all the heavy lifting for us
+	 */
+	private $session;
 
 	/**
 	 * Used to construct the session and initialize the session
 	 */
-	public function __construct() {
-		if ((function_exists('session_status') && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
-			session_start();
+	public function __construct(Illuminate\Session\Store $session) {
+		if (is_null($session) || !isset($session)) {
+			throw new MissingArgumentsException('$session is a required parameter');
 		}
+		$this->session = $session;
 	}
 
 	/**
@@ -26,7 +33,7 @@ class DefaultSession implements Session {
 	 * @return bool Whether or not the store contains the key
 	 */
 	public function has($key) {
-		return isset($_SESSION[$key]);
+		return $this->session->has($key);
 	}
 
 	/**
@@ -39,7 +46,7 @@ class DefaultSession implements Session {
 	 */
 	public function get($key) {
 		if ($this->has($key)) {
-			return $_SESSION[$key];
+			return $this->session->get($key);
 		}
 		throw new KeyNotFoundException("The requested key ($key) could not be found in the session");
 	}
@@ -52,7 +59,7 @@ class DefaultSession implements Session {
 	 * @param mixed $value The value to be stored
 	 */
 	public function put($key, $value) {
-		$_SESSION[$key] = $value;
+		$this->session->put($key, $value);
 	}
 
 }

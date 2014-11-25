@@ -1,6 +1,5 @@
 <?php namespace SoapBox\Authorize;
 
-use Illuminate\Support\Facades\Lang as Lang;
 use SoapBox\Authorize\Exceptions\DuplicateStrategyException;
 use SoapBox\Authorize\Exceptions\InvalidStrategyException;
 
