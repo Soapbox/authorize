@@ -19,9 +19,9 @@ wish to use to your composer. On it's own Authroize will not provide you the
 ability to Authorize against 3rd parties.
 
 ## Some providers to get you started
-[Facebook](https://github.com/SoapBox/authorize-facebook)
-[Google](https://github.com/SoapBox/authorize-google)
-[League - Eventbrite, Github, LinkedIn, Microsoft](https://github.com/Soapbox/authorize-league)
+- [Facebook](https://github.com/SoapBox/authorize-facebook)
+- [Google](https://github.com/SoapBox/authorize-google)
+- [League - Eventbrite, Github, LinkedIn, Microsoft](https://github.com/Soapbox/authorize-league)
 
 ## Usage
 The goal of using Authorize is to leave all the heavy lifting to the various
