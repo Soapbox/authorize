@@ -50,7 +50,7 @@ class Authenticator {
 		$this->session = (!is_null($session)) ?: new DefaultSession();
 
 		$this->setRedirect($redirect);
-		$this->strategy = StrategyFactory::get($strategy, $settings);
+		$this->strategy = StrategyFactory::get($strategy, $settings, $session, $redirect);
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Authenticator {
 	 * @return bool True if the user is logged in, redirect otherwise.
 	 */
 	public function authenticate($parameters = []) {
-		return $this->strategy->login($parameters, $this->session, $this->redirect);
+		return $this->strategy->login($parameters);
 	}
 
 	/**
@@ -89,7 +89,7 @@ class Authenticator {
 	 * @return User The user retieved from the Strategy
 	 */
 	public function getUser($parameters = []) {
-		return $this->strategy->getUser($parameters, $this->session);
+		return $this->strategy->getUser($parameters);
 	}
 
 }
