@@ -35,12 +35,14 @@ class Authenticator {
 	 * Initializes internal varaibles to prepare the class to preform our
 	 * authentication against the provided strategy.
 	 *
+	 * @throws InvalidStrategyException If the provided strategy is not valid
+	 *	or supported.
+	 *
 	 * @param string $strategy The name of the strategy. (i.e. facebook)
 	 * @param mixed[] $settings A collection of settings required to initialize the
 	 *	provided strategy.
-	 *
-	 * @throws InvalidStrategyException If the provided strategy is not valid
-	 *	or supported.
+	 * @param Session $session Provides the strategy a place to store / retrieve data
+	 * @param Router $router Provides the strategy a mechanism to redirect users
 	 */
 	public function __construct($strategy, array $settings = null, Session $session = null, Router $router = null) {
 		$settings = (!is_null($settings)) ?: [];
@@ -62,11 +64,11 @@ class Authenticator {
 	/**
 	 * Used to attempt an authentication against the provided strategy.
 	 *
-	 * @param mixed[] $parameters The parameters requried to authenticate
-	 *	against this strategy. (i.e. username, password, etc)
-	 *
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
+	 *
+	 * @param mixed[] $parameters The parameters requried to authenticate
+	 *	against this strategy. (i.e. username, password, etc)
 	 *
 	 * @return bool True if the user is logged in, redirect otherwise.
 	 */
@@ -77,11 +79,11 @@ class Authenticator {
 	/**
 	 * Used to retrieve the user from the strategy.
 	 *
-	 * @param mixed[] $parameters The parameters required to authenticate
-	 * against this strategy. (i.e. accessToken)
-	 *
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
+	 *
+	 * @param mixed[] $parameters The parameters required to authenticate
+	 * against this strategy. (i.e. accessToken)
 	 *
 	 * @return User The user retieved from the Strategy
 	 */

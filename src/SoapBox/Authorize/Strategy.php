@@ -14,8 +14,8 @@ interface Strategy {
 	 *
 	 * @param array $settings The settings that will be required to setup this
 	 *	strategy. (i.e. OpenId settings)
-	 * @param callable $store A callback that will store a KVP (Key Value Pair).
-	 * @param callable $load A callback that will return a value stored with the
+	 * @param Session $session Provides the strategy a place to store / retrieve data
+	 * @param Router $router Provides the strategy a mechanism to redirect users
 	 *	provided key.
 	 */
 	public function __construct(array $settings, Session $session, Router $router);

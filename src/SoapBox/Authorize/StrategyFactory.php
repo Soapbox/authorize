@@ -47,6 +47,9 @@ class StrategyFactory {
 	/**
 	 * Used to retrieve the specified strategy for authenticating.
 	 *
+	 * @throws InvalidStrategyException If the provided strategy has not been
+	 *	previously registered.
+	 *
 	 * @param string $strategy The name of the strategy. (i.e. facebook)
 	 * @param mixed[] $settings The settings the strategy requires to initialize
 	 * @param Session $session Provides the strategy a place to store / retrieve data

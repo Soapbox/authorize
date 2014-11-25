@@ -32,6 +32,9 @@ class DefaultSession implements Session {
 	/**
 	 * Used to retrieve a stored value for the provided key from the session
 	 *
+	 * @throws KeyNotFoundException If the provided key has been registered into
+	 *	the session.
+	 *
 	 * @param string $key The name of the key to which the value should be
 	 * bound.
 	 *

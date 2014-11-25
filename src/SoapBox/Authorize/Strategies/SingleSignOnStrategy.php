@@ -16,8 +16,8 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 *
 	 * @param array $settings The settings that will be required to setup this
 	 *	strategy. (i.e. OpenId settings)
-	 * @param callable $store A callback that will store a KVP (Key Value Pair).
-	 * @param callable $load A callback that will return a value stored with the
+	 * @param Session $session Provides the strategy a place to store / retrieve data
+	 * @param Router $router Provides the strategy a mechanism to redirect users
 	 *	provided key.
 	 */
 	public abstract function __construct(array $settings, Session $session, Router $router);
@@ -32,11 +32,11 @@ abstract class SingleSignOnStrategy implements Strategy {
 	/**
 	 * Used to attempt an authentication against the strategy.
 	 *
-	 * @param mixed[] $parameters The parameters requried to authenticate
-	 *	against this strategy. (i.e. username, password, etc)
-	 *
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
+	 *
+	 * @param mixed[] $parameters The parameters requried to authenticate
+	 *	against this strategy. (i.e. username, password, etc)
 	 *
 	 * @return User The user retrieved from the Strategy
 	 */
@@ -45,11 +45,11 @@ abstract class SingleSignOnStrategy implements Strategy {
 	/**
 	 * Used to retrieve the user from the strategy.
 	 *
-	 * @param mixed[] $parameters The parameters required to authenticate
-	 * against this strategy. (i.e. accessToken)
-	 *
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
+	 *
+	 * @param mixed[] $parameters The parameters required to authenticate
+	 * against this strategy. (i.e. accessToken)
 	 *
 	 * @return User The user retieved from the Strategy
 	 */
@@ -58,11 +58,13 @@ abstract class SingleSignOnStrategy implements Strategy {
 	/**
 	 * Used to retrieve the social network from the strategy.
 	 *
+	 * @throws AuthenticationException If the provider parameters do not
+	 *	successfully authenticate.
+	 * @throws NotSupportedException If the provider has no mechanism to
+	 *	retreive a list of friends this exception will be thrown.
+	 *
 	 * @param mixed[] $parameters The parameters required to authenticate
 	 *	against this strategy. (i.e. accessToken)
-	 *
-	 * @throws AuthenticationException If the provided parameters do not
-	 *	successfully authenticate.
 	 *
 	 * @return Contact[] A list of contacts that are friends of this user.
 	 */
