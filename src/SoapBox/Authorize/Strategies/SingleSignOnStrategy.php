@@ -1,5 +1,7 @@
 <?php namespace SoapBox\Authorize\Strategies;
 
+use SoapBox\Authorize\Session;
+use SoapBox\Authorize\Router;
 use SoapBox\Authorize\Strategy;
 use SoapBox\Authorize\Exceptions\NotSupportedException;
 
@@ -18,7 +20,7 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 * @param callable $load A callback that will return a value stored with the
 	 *	provided key.
 	 */
-	public abstract function __construct(array $settings);
+	public abstract function __construct(array $settings, Session $session, Router $router);
 
 	/**
 	 * Returns a list of items that the strategy expects from the input.

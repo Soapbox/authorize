@@ -1,5 +1,8 @@
 <?php namespace SoapBox\Authorize;
 
+use SoapBox\Authorize\Session;
+use SoapBox\Authorize\Router;
+
 /**
  * An interface describing the minimum requirements to authorize against a
  * Strategy.
@@ -15,7 +18,7 @@ interface Strategy {
 	 * @param callable $load A callback that will return a value stored with the
 	 *	provided key.
 	 */
-	public function __construct(array $settings);
+	public function __construct(array $settings, Session $session, Router $router);
 
 	/**
 	 * Used to attempt an authentication against the strategy.

@@ -6,18 +6,6 @@
  */
 class Helpers {
 
-	public static $redirect;
-
-	/**
-	 * Helper to redirect the a given url
-	 *
-	 * @param string $url The url you wish to redirect a browser to
-	 */
-	public static function redirect($url) {
-		$redirect = Helpers::$redirect;
-		$redirect($url);
-	}
-
 	/**
 	 * Returns the default if the value is not set.
 	 *

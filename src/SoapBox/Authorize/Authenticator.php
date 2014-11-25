@@ -1,6 +1,7 @@
 <?php namespace SoapBox\Authorize;
 
-use SoapBox\Authorize\Strategies\SingleSignOnStrategy;
+use SoapBox\Authorize\Session;
+use SoapBox\Authorize\Router;
 
 /**
  * The entry point into the Authorize library that enables the validation of a
@@ -23,16 +24,12 @@ class Authenticator {
 	 */
 	private $session;
 
-	private function setRedirect($redirect) {
-		if ($redirect === null) {
-			Helpers::$redirect = function ($url) {
-				header("Location: $url");
-				die();
-			};
-		} else {
-			Helpers::$redirect = $redirect;
-		}
-	}
+	/**
+	 * The router we can use to redirect the user
+	 *
+	 * @var Router
+	 */
+	private $router;
 
 	/**
 	 * Initializes internal varaibles to prepare the class to preform our
@@ -45,12 +42,12 @@ class Authenticator {
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.
 	 */
-	public function __construct($strategy, array $settings = null, Session $session = null, $redirect = null) {
+	public function __construct($strategy, array $settings = null, Session $session = null, Router $router = null) {
 		$settings = (!is_null($settings)) ?: [];
 		$this->session = (!is_null($session)) ?: new DefaultSession();
+		$this->router = (!is_null($router)) ?: new DefaultRouter();
 
-		$this->setRedirect($redirect);
-		$this->strategy = StrategyFactory::get($strategy, $settings, $session, $redirect);
+		$this->strategy = StrategyFactory::get($strategy, $settings, $this->session, $this->router);
 	}
 
 	/**
