@@ -45,9 +45,9 @@ class Authenticator {
 	 * @param Router $router Provides the strategy a mechanism to redirect users
 	 */
 	public function __construct($strategy, array $settings = null, Session $session = null, Router $router = null) {
-		$settings = (!is_null($settings)) ?: [];
-		$this->session = (!is_null($session)) ?: new DefaultSession();
-		$this->router = (!is_null($router)) ?: new DefaultRouter();
+		$settings = (!is_null($settings)) ? $settings : [];
+		$this->session = (!is_null($session)) ? $session : new DefaultSession();
+		$this->router = (!is_null($router)) ? $router : new DefaultRouter();
 
 		$this->strategy = StrategyFactory::get($strategy, $settings, $this->session, $this->router);
 	}

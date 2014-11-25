@@ -1,5 +1,7 @@
 <?php namespace SoapBox\Authorize\Routers;
 
+use SoapBox\Authorize\Router;
+
 /**
  * A default router to redirect our users
  */
