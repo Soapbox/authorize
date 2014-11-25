@@ -18,7 +18,7 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 * @param callable $load A callback that will return a value stored with the
 	 *	provided key.
 	 */
-	public abstract function __construct($settings = array());
+	public abstract function __construct(array $settings);
 
 	/**
 	 * Returns a list of items that the strategy expects from the input.
@@ -38,7 +38,7 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 *
 	 * @return User The user retrieved from the Strategy
 	 */
-	public abstract function login($parameters = array());
+	public abstract function login(array $parameters);
 
 	/**
 	 * Used to retrieve the user from the strategy.
@@ -51,7 +51,7 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 *
 	 * @return User The user retieved from the Strategy
 	 */
-	public abstract function getUser($parameters = array());
+	public abstract function getUser(array $parameters);
 
 	/**
 	 * Used to retrieve the social network from the strategy.
@@ -64,7 +64,7 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 *
 	 * @return Contact[] A list of contacts that are friends of this user.
 	 */
-	public function getFriends($parameters = array()) {
+	public function getFriends(array $parameters) {
 		throw new NotSupportedException();
 	}
 

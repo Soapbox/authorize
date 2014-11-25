@@ -3,7 +3,7 @@
 use SoapBox\Authorize\Strategies\SingleSignOnStrategy;
 
 /**
- * The entry point into the Authroize library that enables the validation of a
+ * The entry point into the Authorize library that enables the validation of a
  * user against a strategy.
  */
 class Authenticator {
@@ -13,33 +13,15 @@ class Authenticator {
 	 *
 	 * @var Strategy
 	 */
-	public $strategy;
+	private $strategy;
 
-	private function setStore($store) {
-		if ($store === null) {
-			Helpers::$store = function($key, $value) {
-				if ((function_exists('session_status') && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
-					session_start();
-				}
-				$_SESSION[$key] = $value;
-			};
-		} else {
-			Helpers::$store = $store;
-		}
-	}
-
-	private function setLoad($load) {
-		if ($load === null) {
-			Helpers::$load = function($key) {
-				if ((function_exists('session_status') && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
-					session_start();
-				}
-				return $_SESSION[$key];
-			};
-		} else {
-			Helpers::$load = $load;
-		}
-	}
+	/**
+	 * The session we can use to store and manage session based
+	 * information
+	 *
+	 * @var Session
+	 */
+	private $session;
 
 	private function setRedirect($redirect) {
 		if ($redirect === null) {
@@ -63,9 +45,10 @@ class Authenticator {
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.
 	 */
-	public function __construct($strategy, $settings = [], $store = null, $load = null, $redirect = null) {
-		$this->setStore($store);
-		$this->setLoad($load);
+	public function __construct($strategy, array $settings = null, Session $session = null, $redirect = null) {
+		$settings = (!is_null($settings)) ?: [];
+		$this->session = (!is_null($session)) ?: new DefaultSession();
+
 		$this->setRedirect($redirect);
 		$this->strategy = StrategyFactory::get($strategy, $settings);
 	}
@@ -91,7 +74,7 @@ class Authenticator {
 	 * @return bool True if the user is logged in, redirect otherwise.
 	 */
 	public function authenticate($parameters = []) {
-		return $this->strategy->login($parameters, $this->store, $this->redirect);
+		return $this->strategy->login($parameters, $this->session, $this->redirect);
 	}
 
 	/**
@@ -106,7 +89,7 @@ class Authenticator {
 	 * @return User The user retieved from the Strategy
 	 */
 	public function getUser($parameters = []) {
-		return $this->strategy->getUser($parameters, $this->load);
+		return $this->strategy->getUser($parameters, $this->session);
 	}
 
 }

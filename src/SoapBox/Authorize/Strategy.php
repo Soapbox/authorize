@@ -15,7 +15,7 @@ interface Strategy {
 	 * @param callable $load A callback that will return a value stored with the
 	 *	provided key.
 	 */
-	public function __construct($settings = array());
+	public function __construct(array $settings);
 
 	/**
 	 * Used to attempt an authentication against the strategy.
@@ -28,7 +28,7 @@ interface Strategy {
 	 *
 	 * @return User The user retrieved from the Strategy
 	 */
-	public function login($parameters = array());
+	public function login(array $parameters);
 
 	/**
 	 * Used to retrieve the user from the strategy.
@@ -41,7 +41,7 @@ interface Strategy {
 	 *
 	 * @return User The user retieved from the Strategy
 	 */
-	public function getUser($parameters = array());
+	public function getUser(array $parameters);
 
 	/**
 	 * Returns a list of items that the strategy expects from the input.
