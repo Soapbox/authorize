@@ -1,6 +1,7 @@
 <?php namespace SoapBox\Authorize;
 
-use Illuminate\Support\Facades\Lang as Lang;
+use SoapBox\Authorize\Session;
+use SoapBox\Authorize\Router;
 use SoapBox\Authorize\Exceptions\DuplicateStrategyException;
 use SoapBox\Authorize\Exceptions\InvalidStrategyException;
 
@@ -15,7 +16,7 @@ class StrategyFactory {
 	 *
 	 * @var Strategy[] $strategies Named array of strategies
 	 */
-	private static $strategies = array();
+	private static $strategies = [];
 
 	/**
 	 * Used to register a new strategy with Authorize
@@ -46,21 +47,23 @@ class StrategyFactory {
 	/**
 	 * Used to retrieve the specified strategy for authenticating.
 	 *
+	 * @throws InvalidStrategyException If the provided strategy has not been
+	 *	previously registered.
+	 *
 	 * @param string $strategy The name of the strategy. (i.e. facebook)
 	 * @param mixed[] $settings The settings the strategy requires to initialize
-	 * @param callable $store A callback that will store a KVP (Key Value Pair).
-	 * @param callable $load A callback that will return a value stored with the
-	 *	provided key.
+	 * @param Session $session Provides the strategy a place to store / retrieve data
+	 * @param Router $router Provides the strategy a mechanism to redirect users
 	 *
 	 * @return Strategy An instance of the strategy requested.
 	 */
-	public static function get($strategy, $settings = array(), $store = null, $load = null) {
+	public static function get($strategy, $settings = [], Session $session, Router $router) {
 		if (!array_key_exists($strategy, self::$strategies)) {
 			throw new InvalidStrategyException(
 				"$strategy strategy has not been registered."
 			);
 		}
-		return new self::$strategies[$strategy]($settings, $store, $load);
+		return new self::$strategies[$strategy]($settings, $session, $router);
 	}
 
 }

@@ -1,5 +1,7 @@
 <?php namespace SoapBox\Authorize\Strategies;
 
+use SoapBox\Authorize\Session;
+use SoapBox\Authorize\Router;
 use SoapBox\Authorize\Strategy;
 use SoapBox\Authorize\Exceptions\NotSupportedException;
 
@@ -14,62 +16,60 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 *
 	 * @param array $settings The settings that will be required to setup this
 	 *	strategy. (i.e. OpenId settings)
-	 * @param callable $store A callback that will store a KVP (Key Value Pair).
-	 * @param callable $load A callback that will return a value stored with the
+	 * @param Session $session Provides the strategy a place to store / retrieve data
+	 * @param Router $router Provides the strategy a mechanism to redirect users
 	 *	provided key.
 	 */
-	public abstract function __construct($settings = array(), $store = null, $load = null);
+	public abstract function __construct(array $settings, Session $session, Router $router);
+
+	/**
+	 * Returns a list of items that the strategy expects from the input.
+	 *
+	 * @return string[] A list of parameters that the strategy is expecting.
+	 */
+	public abstract function expects();
 
 	/**
 	 * Used to attempt an authentication against the strategy.
 	 *
-	 * @param mixed[] $parameters The parameters requried to authenticate
-	 *	against this strategy. (i.e. username, password, etc)
-	 *
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
 	 *
+	 * @param mixed[] $parameters The parameters requried to authenticate
+	 *	against this strategy. (i.e. username, password, etc)
+	 *
 	 * @return User The user retrieved from the Strategy
 	 */
-	public abstract function login($parameters = array());
+	public abstract function login(array $parameters);
 
 	/**
 	 * Used to retrieve the user from the strategy.
 	 *
-	 * @param mixed[] $parameters The parameters required to authenticate
-	 * against this strategy. (i.e. accessToken)
-	 *
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
 	 *
+	 * @param mixed[] $parameters The parameters required to authenticate
+	 * against this strategy. (i.e. accessToken)
+	 *
 	 * @return User The user retieved from the Strategy
 	 */
-	public function getUser($parameters = array()) {
-		throw new NotSupportedException();
-	}
+	public abstract function getUser(array $parameters);
 
 	/**
 	 * Used to retrieve the social network from the strategy.
 	 *
+	 * @throws AuthenticationException If the provider parameters do not
+	 *	successfully authenticate.
+	 * @throws NotSupportedException If the provider has no mechanism to
+	 *	retreive a list of friends this exception will be thrown.
+	 *
 	 * @param mixed[] $parameters The parameters required to authenticate
 	 *	against this strategy. (i.e. accessToken)
 	 *
-	 * @throws AuthenticationException If the provided parameters do not
-	 *	successfully authenticate.
-	 *
 	 * @return Contact[] A list of contacts that are friends of this user.
 	 */
-	public function getFriends($parameters = array()) {
+	public function getFriends(array $parameters) {
 		throw new NotSupportedException();
 	}
-
-	/**
-	 * Used to handle tasks after login. This could include retrieving our users
-	 * token after a successful authentication.
-	 *
-	 * @return mixed[] Array of the tokens and other components that validate
-	 *	our user.
-	 */
-	public abstract function endpoint();
 
 }

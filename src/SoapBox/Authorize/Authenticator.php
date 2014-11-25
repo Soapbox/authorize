@@ -1,7 +1,10 @@
 <?php namespace SoapBox\Authorize;
 
+use SoapBox\Authorize\Session;
+use SoapBox\Authorize\Router;
+
 /**
- * The entry point into the Authroize library that enables the validation of a
+ * The entry point into the Authorize library that enables the validation of a
  * user against a strategy.
  */
 class Authenticator {
@@ -11,47 +14,81 @@ class Authenticator {
 	 *
 	 * @var Strategy
 	 */
-	public $strategy;
+	private $strategy;
+
+	/**
+	 * The session we can use to store and manage session based
+	 * information
+	 *
+	 * @var Session
+	 */
+	private $session;
+
+	/**
+	 * The router we can use to redirect the user
+	 *
+	 * @var Router
+	 */
+	private $router;
 
 	/**
 	 * Initializes internal varaibles to prepare the class to preform our
 	 * authentication against the provided strategy.
 	 *
-	 * @param string $strategy The name of the strategy. (i.e. facebook)
-	 * @param mixed[] $settings The settings the strategy requires to initialize.
-	 * @param callable $store A callback that will store a KVP (Key Value Pair).
-	 * @param callable $load A callback that will return a value stored with the
-	 *	provided key.
-	 *
 	 * @throws InvalidStrategyException If the provided strategy is not valid
 	 *	or supported.
+	 *
+	 * @param string $strategy The name of the strategy. (i.e. facebook)
+	 * @param mixed[] $settings A collection of settings required to initialize the
+	 *	provided strategy.
+	 * @param Session $session Provides the strategy a place to store / retrieve data
+	 * @param Router $router Provides the strategy a mechanism to redirect users
 	 */
-	public function __construct($strategy, $settings = array(), $store = null, $load = null, $redirect = null) {
-		if ($redirect == null) {
-			Helpers::$redirect = function ($url) {
-				header("Location: $url");
-				die();
-			};
-		} else {
-			Helpers::$redirect = $redirect;
-		}
+	public function __construct($strategy, array $settings = null, Session $session = null, Router $router = null) {
+		$settings = (!is_null($settings)) ? $settings : [];
+		$this->session = (!is_null($session)) ? $session : new DefaultSession();
+		$this->router = (!is_null($router)) ? $router : new DefaultRouter();
 
-		$this->strategy = StrategyFactory::get($strategy, $settings, $store, $load);
+		$this->strategy = StrategyFactory::get($strategy, $settings, $this->session, $this->router);
+	}
+
+	/**
+	 * Returns a list of items that the strategy expects from the input.
+	 *
+	 * @return string[] A list of parameters that the strategy is expecting.
+	 */
+	public function expects() {
+		return $this->strategy->expects();
 	}
 
 	/**
 	 * Used to attempt an authentication against the provided strategy.
 	 *
+	 * @throws AuthenticationException If the provided parameters do not
+	 *	successfully authenticate.
+	 *
 	 * @param mixed[] $parameters The parameters requried to authenticate
 	 *	against this strategy. (i.e. username, password, etc)
+	 *
+	 * @return bool True if the user is logged in, redirect otherwise.
+	 */
+	public function authenticate($parameters = []) {
+		return $this->strategy->login($parameters);
+	}
+
+	/**
+	 * Used to retrieve the user from the strategy.
 	 *
 	 * @throws AuthenticationException If the provided parameters do not
 	 *	successfully authenticate.
 	 *
-	 * @return mixed[] A mixed array representing the authenticated user.
+	 * @param mixed[] $parameters The parameters required to authenticate
+	 * against this strategy. (i.e. accessToken)
+	 *
+	 * @return User The user retieved from the Strategy
 	 */
-	public function authenticate($parameters = array()) {
-		return $this->strategy->login($parameters);
+	public function getUser($parameters = []) {
+		return $this->strategy->getUser($parameters);
 	}
 
 }
