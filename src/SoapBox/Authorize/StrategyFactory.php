@@ -30,17 +30,14 @@ class StrategyFactory {
 	 * @param string $klass The class with namespace that is being registered
 	 */
 	public static function register($name, $klass) {
-		if (array_key_exists($name, self::$strategies)) {
-			throw new DuplicateStrategyException(
-				"The $name key has already been registered."
-			);
-		}
 		if (!in_array('SoapBox\Authorize\Strategy', class_implements($klass))) {
 			throw new InvalidStrategyException(
 				"The provided class does not implement the 'SoapBox\Authorize\Strategy' interface."
 			);
 		}
-		self::$strategies[$name] = $klass;
+		if ( !array_key_exists($name, self::$strategies) ) {
+			self::$strategies[$name] = $klass;
+		}
 	}
 
 	/**
