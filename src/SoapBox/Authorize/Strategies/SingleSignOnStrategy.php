@@ -72,4 +72,14 @@ abstract class SingleSignOnStrategy implements Strategy {
 	 */
 	public abstract function endpoint();
 
+	/**
+	 * Used to signout from the strategy.
+	 *
+	 * @param string $redirectUrl The url to send the user to after preforming
+	 *	a logout.
+	 */
+	public function signout($redirectUrl) {
+		throw new NotSupportedException();
+	}
+
 }
