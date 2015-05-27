@@ -63,6 +63,13 @@ class User {
 	public $custom = [];
 
 	/**
+	* The user's locale setting.
+	*
+	* @var string
+	*/
+	public $locale = 'en-CA';
+
+	/**
 	 * Used to return an array representation of the user object. Good for
 	 * validators.
 	 *
@@ -77,7 +84,8 @@ class User {
 			'accessToken' => $this->accessToken,
 			'firstname' => $this->firstname,
 			'lastname' => $this->lastname,
-			'custom' => $this->custom
+			'custom' => $this->custom,
+			'locale' => $this->locale
 		];
 	}
 
