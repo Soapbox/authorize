@@ -67,7 +67,7 @@ class User {
 	*
 	* @var string
 	*/
-	public $locale = 'en-CA';
+	public $locale = '';
 
 	/**
 	 * Used to return an array representation of the user object. Good for
